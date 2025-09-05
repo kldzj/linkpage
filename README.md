@@ -1,72 +1,85 @@
 # 🔗 LinkPage
 
-A beautiful, self-hosted LinkTree alternative built with Next.js, TypeScript, and Tailwind CSS. Create a stunning personal link page with customizable themes, animations, and analytics.
+A self-hosted, customizable LinkTree alternative to showcase your links, built with Next.js and Tailwind CSS.
 
 ![LinkPage Preview](.github/screenshot.png)
 
 ## ✨ Features
 
-- 🔧 **Easy Configuration**: Simple JSON configuration file
-- 🎨 **Beautiful Design**: Modern, responsive design with smooth animations
-- 🌈 **Multiple Themes**: Built-in color schemes (default, blue, purple, green, dark)
-- 🎯 **Customizable Links**: Support for custom colors, backgrounds, icons, and descriptions
-- 📱 **Mobile Optimized**: Perfect experience on all devices
-- 🚀 **Fast Performance**: Built with Next.js for optimal speed
-- 📊 **Analytics Ready**: Google Analytics, Plausible, and Umami support
-- 🎭 **Featured Links**: Highlight important links with badges
-- 🔍 **SEO Optimized**: Dynamic meta tags, Open Graph images, and Twitter cards
-- ♿ **Accessible**: Built with accessibility best practices
+- **Easy to set up**: Configure everything with a single JSON file.
+- **Customizable**: Choose from multiple themes, or create your own color scheme.
+- **Flexible Links**: Add social icons, descriptions, and custom backgrounds to your links.
+- **Analytics**: Track your page views with Google Analytics, Plausible, or Umami.
+- **SEO Ready**: Automatic Open Graph images and meta tags.
+- **Fast & Light**: Built with Next.js for great performance.
+- **Self-Hostable**: Deploy it anywhere, including Vercel or with Docker.
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
-1. **Clone and Install**
+You can get LinkPage up and running with Docker or by building it from source.
 
-   ```bash
-   git clone <your-repo>
-   cd linkpage
-   yarn install
-   ```
+### Docker (Recommended)
 
-2. **Configure Your Profile**
-   Edit `config.json` with your information:
+This is the fastest and easiest way to get started.
 
-   ```json
-   {
-     "name": "Your Name",
-     "biography": "Your bio here",
-     "avatar": "your-avatar.jpg",
-     "domain": "https://yourdomain.com",
-     "links": {
-       "github": "https://github.com/yourusername",
-       "portfolio": {
-         "title": "My Portfolio",
-         "url": "https://yoursite.com",
-         "featured": true
-       }
-     }
-   }
-   ```
+1.  **Create `config.json`**
 
-3. **Add Your Images**
+    Create a `config.json` file. You can copy the [`config.example.json`](https://github.com/kldzj/linkpage/blob/main/config.example.json) to get started quickly.
 
-   - Place your avatar image in the `images/` folder
-   - Update the `avatar` field in `config.json`
+2.  **Create `images` Folder**
 
-4. **Run Development Server**
+    Create a `public/images` directory and place your avatar and any other images inside it.
 
-   ```bash
-   yarn dev
-   ```
+3.  **Run the Docker Container**
 
-5. **Visit** [http://localhost:3000](http://localhost:3000)
+    ```bash
+    docker run -p 3000:3000 \
+      -v $(pwd)/config.json:/app/config.json \
+      -v $(pwd)/public/images:/app/public/images \
+      ghcr.io/kldzj/linkpage:latest
+    ```
+
+4.  Open [http://localhost:3000](http://localhost:3000) to see your page.
+
+### From Source
+
+Follow these steps if you want to customize the code or contribute to the project.
+
+1.  **Fork the Repository**
+
+    Start by forking the repository to your own GitHub account.
+
+2.  **Clone and Install**
+
+    ```bash
+    git clone https://github.com/your-username/linkpage.git
+    cd linkpage
+    yarn install
+    ```
+
+3.  **Configure Your Profile**
+
+    Copy `config.example.json` to `config.json` and edit it with your information.
+
+4.  **Run Development Server**
+
+    ```bash
+    yarn dev
+    ```
+
+5.  **Deploy**
+
+    I recommend deploying with Vercel for the best performance and easiest setup.
 
 ## 🎨 Customization
 
+Customize your page's look and feel in `config.json`.
+
 ### Themes
 
-Choose from built-in themes in your `config.json`:
+Choose a built-in theme or set a custom accent color.
 
-```json
+```jsonc
 {
   "theme": {
     "colorScheme": "blue", // default, blue, purple, green
@@ -86,8 +99,9 @@ Choose from built-in themes in your `config.json`:
 
 **Simple Links:**
 
-```json
+```jsonc
 {
+  // Simple key-value pair where the key is the platform name and the value is the URL
   "github": "https://github.com/username"
 }
 ```
@@ -121,60 +135,18 @@ Choose from built-in themes in your `config.json`:
 }
 ```
 
-**Size Examples:**
-
-```json
-{
-  "links": {
-    "email": "mailto:me@example.com",
-    "secondary": {
-      "title": "Secondary Link",
-      "url": "https://example.com",
-      "size": "small"
-    },
-    "main": {
-      "title": "Main Project",
-      "url": "https://main-project.com",
-      "size": "medium"
-    },
-    "featured": {
-      "title": "Featured Work",
-      "url": "https://featured.com",
-      "bgColor": "#1f2937",
-      "color": "#ffffff",
-      "size": "large"
-    },
-    "hero": {
-      "title": "Hero Project",
-      "url": "https://hero-project.com",
-      "bgImage": "hero-bg.jpg",
-      "size": "extra-large"
-    }
-  }
-}
-```
-
 ### Link Sizes
 
-Control the visual prominence of your links:
+Control the size and prominence of your links.
 
-- **`small`**: Compact padding (`py-2`) - great for secondary links
-- **`medium`**: Standard padding (`py-3`) - default size
-- **`large`**: Generous padding (`py-8`) - perfect for hero links
-- **`extra-large`**: Maximum padding (`py-12`) - ideal for showcasing background images
+- `small`: Compact padding, great for secondary links.
+- `medium`: Standard padding, the default size.
+- `large`: More padding, perfect for important links.
+- `extra-large`: Maximum padding, ideal for background images.
 
-Note: Links with background images automatically get appropriate padding for better text readability.
+### Icons
 
-### Available Icons & Display Names
-
-The system automatically detects icons and proper display names for common platforms:
-
-- **Social**: `github` → "GitHub", `linkedin` → "LinkedIn", `twitter` → "Twitter", `facebook` → "Facebook", `instagram` → "Instagram"
-- **Video**: `youtube` → "YouTube", `twitch` → "Twitch"
-- **Communication**: `email` → "Email", `phone` → "Phone", `discord` → "Discord", `whatsapp` → "WhatsApp"
-- **Creative**: `music` → "Music", `spotify` → "Spotify", `portfolio` → "Portfolio", `blog` → "Blog"
-- **Support**: `coffee` → "Buy me a coffee", `donate` → "Donate", `support` → "Support"
-- And many more with intelligent fallback to proper title case!
+Icons are automatically detected for many common platforms like GitHub, Twitter, LinkedIn, and more.
 
 ## 📊 Analytics
 
@@ -226,46 +198,9 @@ To hide the footer, you must:
 2. Set `sponsoredOnGitHub: true` in your config
 3. Set `hideFooter: true` to hide the footer
 
-This helps sustain the project while giving sponsors customization freedom!
+## 🖼️ Open Graph Images
 
-## 🖼️ Automatic Open Graph Images
-
-LinkPage automatically generates beautiful Open Graph and Twitter card images using your profile information:
-
-### ✨ Features
-
-- **Dynamic generation**: Images created from your config data
-- **Optimized for sharing**: Perfect dimensions for social media
-- **Zero configuration**: Works out of the box
-
-### 🎨 What's Included
-
-- Your profile name and bio
-- Avatar image
-- Link count indicator
-
-### 📱 Preview URLs
-
-- Open Graph: `/opengraph-image`
-
-The images are automatically referenced in your page metadata, so they'll appear whenever someone shares your LinkPage on social media!
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Connect to Vercel
-3. Deploy automatically
-
-### Docker
-
-```bash
-docker run -p 3000:3000 \
-  -v $(pwd)/config.json:/app/config.json \
-  -v $(pwd)/public/images:/app/public/images \
-  ghcr.io/kldzj/linkpage:latest
-```
+LinkPage automatically generates Open Graph images for social media sharing using your profile name, bio, and avatar. No configuration is needed.
 
 ## 🛠️ Development
 
@@ -282,27 +217,22 @@ yarn build
 # Start production server
 yarn start
 
-# Lint code
+# Lint and format code
 yarn lint
-
-# Format code
 yarn format
 ```
 
-## 🎯 Configuration Reference
+## 🎯 Configuration
 
-See the complete configuration schema in `src/lib/config.ts`. Key options:
+The full configuration schema is defined in `src/lib/config.ts`. Here are some key options:
 
 - **Profile**: `name`, `biography`, `avatar`, `domain`
 - **Theme**: `layout`, `colorScheme`, `backgroundType`, `accentColor`
 - **SEO**: `title`, `description`, `keywords`, `favicon`
-- **Analytics**: `enabled`, `googleAnalytics`, `plausible`
+- **Analytics**: `enabled`, `googleAnalytics`, `plausible`, `umami`
 - **Branding**: `hideFooter`, `sponsoredOnGitHub`
-- **Links**: Simple strings or advanced objects with custom styling
 
-### Domain Configuration
-
-The `domain` field is required for proper SEO and Open Graph functionality:
+The `domain` field is required for SEO and Open Graph images to work correctly.
 
 ```json
 {
@@ -312,10 +242,12 @@ The `domain` field is required for proper SEO and Open Graph functionality:
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+1.  Fork the repository
+2.  Create a feature branch
+3.  Make your changes
+4.  Submit a pull request
 
 ## 📄 License
 
@@ -326,9 +258,9 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - ✅ Free for personal and commercial use
 - ✅ Modify and distribute freely
 - ✅ No warranty or liability
-- 💖 Attribution appreciated (footer sponsorship model)
+- 💖 Attribution appreciated
 
-The MIT License provides maximum freedom while our sponsorship model helps sustain development!
+The MIT License provides maximum freedom while the sponsorship model helps sustain development!
 
 ## 💝 Support
 
