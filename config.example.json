@@ -1,0 +1,61 @@
+{
+  "avatar": "avatar.png",
+  "name": "Your Name",
+  "biography": "Your bio here - tell people what you do and what you're passionate about!",
+  "domain": "https://yourdomain.com",
+  "theme": {
+    "colorScheme": "blue",
+    "accentColor": "#6366f1"
+  },
+  "seo": {
+    "title": "Your Name - Links",
+    "description": "Find all my important links in one place.",
+    "keywords": ["links", "social", "profile", "portfolio"]
+  },
+  "analytics": {
+    "enabled": false,
+    "googleAnalytics": "",
+    "plausible": "",
+    "umami": {
+      "websiteId": "your-website-id",
+      "src": "https://your-umami-instance.com/script.js"
+    }
+  },
+  "branding": {
+    "hideFooter": false,
+    "sponsoredOnGitHub": false
+  },
+  "links": {
+    "github": "https://github.com/yourusername",
+    "linkedin": "https://linkedin.com/in/yourusername",
+    "twitter": "https://twitter.com/yourusername",
+    "email": "mailto:your@email.com",
+    "website": {
+      "title": "My Website",
+      "url": "https://yourwebsite.com",
+      "description": "Check out my personal website",
+      "featured": true
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "url": "https://portfolio.com",
+      "description": "View my latest work",
+      "bgColor": "#1f2937",
+      "color": "#ffffff",
+      "size": "medium"
+    },
+    "blog": {
+      "title": "My Blog",
+      "url": "https://blog.com",
+      "description": "Thoughts and tutorials",
+      "size": "small"
+    },
+    "custom": {
+      "title": "Special Project",
+      "url": "https://special-project.com",
+      "bgImage": "custom.jpg",
+      "description": "My latest creation - showcased beautifully",
+      "size": "extra-large"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  linkpage:
+    image: ghcr.io/kldzj/linkpage:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config.json:/app/config.json
+      - ./public/images:/app/public/images
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
