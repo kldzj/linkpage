@@ -81,6 +81,38 @@ jobs:
             type=ref,event=tag
             type=raw,value=latest,enable={{is_default_branch}}
 
+      - name: Prepare platform-specific tags (AMD64)
+        if: matrix.platform == 'linux/amd64'
+        id: tags-amd64
+        run: |
+          TAGS_JSON='${{ steps.meta.outputs.json }}'
+          TAGS=$(echo "$TAGS_JSON" | jq -r '.tags[]')
+          PLATFORM_TAGS=""
+          for tag in $TAGS; do
+            if [ -z "$PLATFORM_TAGS" ]; then
+              PLATFORM_TAGS="$tag-amd64"
+            else
+              PLATFORM_TAGS="$PLATFORM_TAGS,$tag-amd64"
+            fi
+          done
+          echo "tags=$PLATFORM_TAGS" >> $GITHUB_OUTPUT
+
+      - name: Prepare platform-specific tags (ARM64)
+        if: matrix.platform == 'linux/arm64'
+        id: tags-arm64
+        run: |
+          TAGS_JSON='${{ steps.meta.outputs.json }}'
+          TAGS=$(echo "$TAGS_JSON" | jq -r '.tags[]')
+          PLATFORM_TAGS=""
+          for tag in $TAGS; do
+            if [ -z "$PLATFORM_TAGS" ]; then
+              PLATFORM_TAGS="$tag-arm64"
+            else
+              PLATFORM_TAGS="$PLATFORM_TAGS,$tag-arm64"
+            fi
+          done
+          echo "tags=$PLATFORM_TAGS" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image (AMD64)
         if: matrix.platform == 'linux/amd64'
         id: build-amd64
@@ -89,7 +121,7 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}-amd64
+          tags: ${{ steps.tags-amd64.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
@@ -102,7 +134,7 @@ jobs:
           context: .
           platforms: ${{ matrix.platform }}
           push: true
-          tags: ${{ steps.meta.outputs.tags }}-arm64
+          tags: ${{ steps.tags-arm64.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=${{ matrix.platform }}
           cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
@@ -133,12 +165,14 @@ jobs:
 
       - name: Create and push multi-arch manifest
         run: |
-          # Get the tags from metadata
-          TAGS="${{ steps.meta.outputs.tags }}"
-          
+          # Get the tags from metadata and convert to array
+          TAGS_JSON='${{ steps.meta.outputs.json }}'
+          TAGS=$(echo "$TAGS_JSON" | jq -r '.tags[]')
+
           # Create multi-arch manifests for each tag
           for tag in $TAGS; do
             echo "Creating manifest for $tag"
+            echo "Using platform images: $tag-amd64, $tag-arm64"
             docker buildx imagetools create \
               --tag "$tag" \
               "$tag-amd64" \
