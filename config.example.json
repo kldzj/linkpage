@@ -44,6 +44,24 @@
       "color": "#ffffff",
       "size": "medium"
     },
+    "tools": {
+      "title": "Useful Tools",
+      "description": "Small utilities and tools I've created",
+      "size": "small",
+      "pages": {
+        "calculator": "https://calculator.yoursite.com",
+        "colorpicker": {
+          "title": "Color Picker Tool",
+          "url": "https://colors.yoursite.com",
+          "description": "Generate beautiful color palettes"
+        },
+        "converter": {
+          "title": "Unit Converter",
+          "url": "https://convert.yoursite.com",
+          "description": "Convert between different units"
+        }
+      }
+    },
     "blog": {
       "title": "My Blog",
       "url": "https://blog.com",

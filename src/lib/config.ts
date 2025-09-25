@@ -46,6 +46,18 @@ declare let global: {
   watcherInitialized: boolean;
 };
 
+export function isSubPage(
+  linkData: string | LinkItem | SubPage,
+): linkData is SubPage {
+  return typeof linkData === "object" && "pages" in linkData;
+}
+
+export function isLinkItem(
+  linkData: string | LinkItem | SubPage,
+): linkData is LinkItem {
+  return typeof linkData === "object" && "url" in linkData;
+}
+
 export function getConfig(forceReload = false): Config {
   if (global.config && !forceReload) return global.config;
   const configContent = fs.readFileSync(
@@ -76,6 +88,34 @@ export function watchConfig() {
     },
   );
 }
+
+export type LinkItem = {
+  title: string;
+  url: string;
+  description?: string;
+  icon?: string;
+  color?: string;
+  bgColor?: string;
+  bgImage?: string;
+  featured?: boolean;
+  hidden?: boolean;
+  size?: "small" | "medium" | "large" | "extra-large";
+};
+
+export type SubPage = {
+  title: string;
+  description?: string;
+  icon?: string;
+  color?: string;
+  bgColor?: string;
+  bgImage?: string;
+  featured?: boolean;
+  hidden?: boolean;
+  size?: "small" | "medium" | "large" | "extra-large";
+  pages: {
+    [key: string]: string | LinkItem;
+  };
+};
 
 export type Config = {
   avatar: string;
@@ -108,19 +148,6 @@ export type Config = {
     sponsoredOnGitHub?: boolean;
   };
   links: {
-    [key: string]:
-      | string
-      | {
-          title: string;
-          url: string;
-          description?: string;
-          icon?: string;
-          color?: string;
-          bgColor?: string;
-          bgImage?: string;
-          featured?: boolean;
-          hidden?: boolean;
-          size?: "small" | "medium" | "large" | "extra-large";
-        };
+    [key: string]: string | LinkItem | SubPage;
   };
 };
